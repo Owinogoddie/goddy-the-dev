@@ -40,6 +40,7 @@ export const Vortex = (props: VortexProps) => {
   let tick = 0;
   const noise3D = createNoise3D();
   let particleProps = new Float32Array(particlePropsLength);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   let center: [number, number] = [0, 0];
 
   const HALF_PI: number = 0.5 * Math.PI;
@@ -54,7 +55,7 @@ export const Vortex = (props: VortexProps) => {
   const lerp = (n1: number, n2: number, speed: number): number =>
     (1 - speed) * n1 + speed * n2;
 
- 
+ // eslint-disable-next-line react-hooks/exhaustive-deps
   const initParticles = () => {
     tick = 0;
     // simplex = new SimplexNoise();
@@ -83,10 +84,10 @@ export const Vortex = (props: VortexProps) => {
 
     particleProps.set([x, y, vx, vy, life, ttl, speed, radius, hue], i);
   };
-
+// eslint-disable-next-line react-hooks/exhaustive-deps
   const draw = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) => {
     tick++;
-
+// eslint-disable-next-line react-hooks/exhaustive-deps
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     ctx.fillStyle = backgroundColor;
@@ -171,7 +172,7 @@ export const Vortex = (props: VortexProps) => {
   const checkBounds = (x: number, y: number, canvas: HTMLCanvasElement) => {
     return x > canvas.width || x < 0 || y > canvas.height || y < 0;
   };
-
+// eslint-disable-next-line react-hooks/exhaustive-deps
   const resize = useCallback((
     canvas: HTMLCanvasElement,
     ctx?: CanvasRenderingContext2D
@@ -181,7 +182,7 @@ export const Vortex = (props: VortexProps) => {
     canvas.height = innerHeight;
     center[0] = 0.5 * canvas.width;
     center[1] = 0.5 * canvas.height;
-  }, []);
+  }, [center]);
 
   const renderGlow = (
     canvas: HTMLCanvasElement,
