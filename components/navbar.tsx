@@ -43,7 +43,7 @@ export function Navbar() {
 
     return (
       <motion.div 
-      className="bg-black-300 z-[99999] md:shadow-xl rounded-full"
+      className="bg-black z-[999] md:shadow-xl rounded-full"
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}

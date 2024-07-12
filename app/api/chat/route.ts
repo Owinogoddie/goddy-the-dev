@@ -11,8 +11,8 @@ Full Name: Owino Godfrey
 Location: Eldoret, Kenya
 Contact: 0714630040
 Email: owinogoddie@gmail.com
-LinkedIn: [linkedin.com/in/your_link]
-GitHub: [github.com/your_profile]
+LinkedIn: https://www.linkedin.com/in/owino-godfrey-517b94275/
+GitHub: https://github.com/Owinogoddie
 
 Professional Summary:
 Godfrey Owino is a highly skilled Full-Stack Developer with a specialization in AI integration. He excels in creating powerful, intelligent web applications from concept to deployment. His expertise spans the entire MERN (MongoDB, Express.js, React, Node.js) stack, with additional proficiency in Next.js and cutting-edge AI technologies. Godfrey has a proven track record of developing solutions that significantly enhance user engagement and business efficiency.

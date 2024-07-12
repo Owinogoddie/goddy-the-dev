@@ -36,7 +36,7 @@ const AnimatedSection = ({ children }: { children: ReactNode }) => {
 const Page = () => {
   return (
     <main className="relative bg-black-100 flex justify-center items-center flex-col overflow-hidden mx-auto px-5 sm:px-10">
-      <div className="fixed bottom-4 z-[99999999999]">
+      <div className="fixed bottom-4 z-[99]">
         <Navbar />
       </div>
       <div className="max-w-7xl w-full">
