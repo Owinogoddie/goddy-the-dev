@@ -44,7 +44,7 @@ export default function Chat() {
   return (
     <>
       <motion.button
-        className="fixed bottom-4 right-4 bg-primary text-primary-foreground p-4 rounded-full shadow-lg"
+        className="fixed bottom-20 md:bottom-4 right-4 bg-primary text-primary-foreground p-4 rounded-full shadow-lg"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         animate={{
@@ -62,14 +62,14 @@ export default function Chat() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="fixed bottom-20 right-4 w-96 h-[600px] bg-background rounded-lg shadow-xl flex flex-col"
+            className="fixed bottom-24 md:bottom-20 right-4 w-96 h-[600px] bg-background rounded-lg shadow-xl flex flex-col"
           >
             <div className="bg-primary text-primary-foreground p-4 rounded-t-lg">
               <h2 className="text-xl font-bold">Chat with Godfrey AI</h2>
             </div>
             <div
               ref={chatContainerRef}
-              className="flex-1 overflow-y-auto p-4 space-y-4"
+              className="flex-1 overflow-y-auto p-4 space-y-4 z-[999999]"
             >
               {messages.map((message, index) => (
                 <div
