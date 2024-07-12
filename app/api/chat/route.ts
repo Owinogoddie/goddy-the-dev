@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import Groq from 'groq-sdk';
+let Groq:any;
 
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY!, // This is the default and can be omitted
-});
+  
 
 const GODFREY_INFO = `
 
@@ -336,6 +334,12 @@ This enhanced section emphasizes your flexibility, adaptability, and willingness
 `;
 
 export async function POST(req: NextRequest) {
+    if (!Groq) {
+        Groq = (await import('groq-sdk')).default;
+      }
+      const groq = new Groq({
+        apiKey: process.env.GROQ_API_KEY!,
+      });
   const { messages } = await req.json();
 
   try {
