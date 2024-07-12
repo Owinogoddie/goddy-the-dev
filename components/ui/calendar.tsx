@@ -1,16 +1,23 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { ChevronLeft, ChevronRight } from "lucide-react"
-import { DayPicker } from "react-day-picker"
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import * as React from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { DayPicker } from "react-day-picker";
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
-export type CalendarProps = React.ComponentProps<typeof DayPicker>
+export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 
 function Calendar({
   className,
@@ -20,9 +27,13 @@ function Calendar({
 }: CalendarProps) {
   const [selectedDay, setSelectedDay] = useState<Date | undefined>(undefined);
   const [showBookingDialog, setShowBookingDialog] = useState(false);
+  const [isLoading, setIsloading] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+  const [toast, setToast] = useState<{
+    message: string;
+    type: "success" | "error";
+  } | null>(null);
 
   useEffect(() => {
     if (toast) {
@@ -31,13 +42,13 @@ function Calendar({
     }
   }, [toast]);
 
-  const showToast = (message: string, type: 'success' | 'error') => {
+  const showToast = (message: string, type: "success" | "error") => {
     setToast({ message, type });
   };
 
   const handleDayClick = (day: Date) => {
     if (day < new Date()) {
-      showToast("You can't book appointments in the past.", 'error');
+      showToast("You can't book appointments in the past.", "error");
       return;
     }
     setSelectedDay(day);
@@ -45,30 +56,29 @@ function Calendar({
   };
 
   const handleBooking = async () => {
+    setIsloading(true)
     try {
-      const response = await fetch('/api/book', {
-        method: 'POST',
+      await fetch("/api/sendEmail", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ date: selectedDay, name, email }),
       });
 
-      if (response.ok) {
-        showToast('Booking successful!', 'success');
-        setShowBookingDialog(false);
-      } else {
-        showToast('Booking failed. Please try again.', 'error');
-      }
+      showToast("Booking successful!", "success");
+      setShowBookingDialog(false);
+      setName("");
+      setEmail("");
     } catch (error) {
-      console.error('Booking error:', error);
-      showToast('An error occurred. Please try again.', 'error');
+      console.error("Booking error:", error);
+      showToast("An error occurred. Please try again.", "error");
+    }finally{
+      setIsloading(false)
     }
   };
 
-  const disabledDays = [
-    { from: new Date(0), to: new Date() }
-  ];
+  const disabledDays = [{ from: new Date(0), to: new Date() }];
 
   return (
     <div className="w-full max-w-md mx-auto">
@@ -79,7 +89,8 @@ function Calendar({
         showOutsideDays={showOutsideDays}
         className={cn("p-3  rounded-lg shadow-md", className)}
         classNames={{
-          months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
+          months:
+            "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
           month: "space-y-4",
           caption: "flex justify-center pt-1 relative items-center",
           caption_label: "text-sm font-medium",
@@ -125,7 +136,8 @@ function Calendar({
           <DialogHeader>
             <DialogTitle>Book Appointment</DialogTitle>
             <DialogDescription>
-              Please enter your details to book an appointment for {selectedDay?.toDateString()}.
+              Please enter your details to book an appointment for{" "}
+              {selectedDay?.toDateString()}.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
@@ -154,7 +166,12 @@ function Calendar({
             </div>
           </div>
           <DialogFooter>
-            <Button className="ml-[108px] md:ml-[101px] md:w-full" onClick={handleBooking}>Book Appointment</Button>
+            <Button
+              className="ml-[108px] md:ml-[101px] md:w-full"
+              onClick={handleBooking}
+            >
+              {isLoading ? 'Booking please wait' :'Book Appointment'}
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -164,8 +181,8 @@ function Calendar({
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -50 }}
-            className={`fixed top-4 right-4 p-4 rounded-md shadow-md ${
-              toast.type === 'success' ? 'bg-green-500' : 'bg-red-500'
+            className={`fixed bottom-4 right-4 p-4 rounded-md shadow-md ${
+              toast.type === "success" ? "bg-green-500" : "bg-red-500"
             } text-white`}
           >
             {toast.message}
@@ -173,9 +190,9 @@ function Calendar({
         )}
       </AnimatePresence>
     </div>
-  )
+  );
 }
 
-Calendar.displayName = "Calendar"
+Calendar.displayName = "Calendar";
 
-export { Calendar }
+export { Calendar };

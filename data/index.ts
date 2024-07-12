@@ -77,68 +77,68 @@ export const gridItems = [
 export const projects = [
   {
     id: 1,
-    title: "3D Solar System Planets to Explore",
-    des: "Explore the wonders of our solar system with this captivating 3D simulation of the planets using Three.js.",
-    img: "/p1.svg",
+    title: "SkillSync AI: Revolutionizing Education",
+    des: "Harness the power of AI to create, manage, and personalize courses. Transform learning with AI-generated content, adaptive paths, and interactive assessments.",
+    img: "/skillsync.png",
     iconLists: ["/re.svg", "/tail.svg", "/ts.svg", "/three.svg", "/fm.svg"],
     link: "https://skillsync-ai.vercel.app/",
   },
   {
     id: 2,
-    title: "Yoom - Video Conferencing App",
-    des: "Simplify your video conferencing experience with Yoom. Seamlessly connect with colleagues and friends.",
-    img: "/p2.svg",
+    title: "NoteFlow: Your Digital Brain",
+    des: "Unleash your productivity with this Notion-inspired workspace. Seamlessly organize ideas, plans, and documents in one intuitive platform.",
+    img: "/noteflow.png",
     iconLists: ["/next.svg", "/tail.svg", "/ts.svg", "/stream.svg", "/c.svg"],
-    link: "/ui.yoom.com",
+    link: "https://noteflow-seven.vercel.app/",
   },
   {
     id: 3,
-    title: "AI Image SaaS - Canva Application",
-    des: "A REAL Software-as-a-Service app with AI features and a payments and credits system using the latest tech stack.",
-    img: "/p3.svg",
+    title: "Mumias Sugar: Digital Sweetness",
+    des: "A modern, unofficial tribute to Kenya's sugar giant. Explore the rich history and sweet innovations of Mumias Sugar Company.",
+    img: "/mumias.png",
     iconLists: ["/re.svg", "/tail.svg", "/ts.svg", "/three.svg", "/c.svg"],
-    link: "/ui.aiimg.com",
+    link: "https://mumiassugar.vercel.app/",
   },
   {
     id: 4,
-    title: "Animated Apple Iphone 3D Website",
-    des: "Recreated the Apple iPhone 15 Pro website, combining GSAP animations and Three.js 3D effects..",
-    img: "/p4.svg",
+    title: "Shamba Assistant AI: Your Digital Farmhand",
+    des: "Revolutionize farming with AI-powered insights. From soil analysis to disease detection, nurture your crops and livestock with cutting-edge technology.",
+    img: "/shamba.png",
     iconLists: ["/next.svg", "/tail.svg", "/ts.svg", "/three.svg", "/gsap.svg"],
-    link: "/ui.apple.com",
+    link: "https://shamba-assistant.vercel.app/dashboard",
   },
 ];
 
 export const testimonials = [
   {
     quote:
-      "Collaborating with Godfrey was an absolute pleasure. His professionalism, promptness, and dedication to delivering exceptional results were evident throughout our project. Adrian's enthusiasm for every facet of development truly stands out. If you're seeking to elevate your website and elevate your brand, Adrian is the ideal partner.",
-    name: "Michael Johnson",
-    title: "Director of AlphaStream Technologies",
+      "Godfrey's work on SkillSync AI was nothing short of revolutionary. His ability to seamlessly integrate AI into our education platform elevated our entire learning ecosystem. His technical prowess, coupled with a deep understanding of educational needs, made him an invaluable asset to our project.",
+    name: "Dr. Emily Chen",
+    title: "Chief Education Officer, EduTech Innovations",
   },
   {
     quote:
-      "Collaborating with Godfrey was an absolute pleasure. His professionalism, promptness, and dedication to delivering exceptional results were evident throughout our project. Adrian's enthusiasm for every facet of development truly stands out. If you're seeking to elevate your website and elevate your brand, Adrian is the ideal partner.",
-    name: "Michael Johnson",
-    title: "Director of AlphaStream Technologies",
+      "The Shamba Assistant AI project led by Godfrey has transformed how we approach agriculture in our region. His innovative use of AI for soil analysis and disease detection has empowered countless farmers. Godfrey's dedication to creating practical, user-friendly solutions is truly commendable.",
+    name: "John Muthomi",
+    title: "Director of Agricultural Development, Kenyan Ministry of Agriculture",
   },
   {
     quote:
-      "Collaborating with Godfrey was an absolute pleasure. His professionalism, promptness, and dedication to delivering exceptional results were evident throughout our project. Adrian's enthusiasm for every facet of development truly stands out. If you're seeking to elevate your website and elevate your brand, Adrian is the ideal partner.",
-    name: "Michael Johnson",
-    title: "Director of AlphaStream Technologies",
+      "NoteFlow has completely revolutionized our team's productivity. Godfrey's attention to detail and understanding of user experience shines through in every aspect of the app. His ability to translate complex requirements into an intuitive, powerful tool is remarkable.",
+    name: "Sarah Ochieng",
+    title: "Project Manager, Tech Innovators Ltd",
   },
   {
     quote:
-      "Collaborating with Godfrey was an absolute pleasure. His professionalism, promptness, and dedication to delivering exceptional results were evident throughout our project. Adrian's enthusiasm for every facet of development truly stands out. If you're seeking to elevate your website and elevate your brand, Adrian is the ideal partner.",
-    name: "Michael Johnson",
-    title: "Director of AlphaStream Technologies",
+      "As a freelance client, I was blown away by Godfrey's expertise in AI integration. He didn't just deliver a product; he provided a competitive edge that has significantly boosted our business. His professionalism and clear communication made the entire process smooth and enjoyable.",
+    name: "Michael Ongaro",
+    title: "CEO, StartUp Dynamics",
   },
   {
     quote:
-      "Collaborating with Godfrey was an absolute pleasure. His professionalism, promptness, and dedication to delivering exceptional results were evident throughout our project. Adrian's enthusiasm for every facet of development truly stands out. If you're seeking to elevate your website and elevate your brand, Adrian is the ideal partner.",
-    name: "Michael Johnson",
-    title: "Director of AlphaStream Technologies",
+      "The unofficial Mumias Sugar website Godfrey created is a testament to his versatility as a developer. He managed to capture the essence of our company's rich history while delivering a modern, engaging user experience. His work has significantly enhanced our digital presence.",
+    name: "Grace Adhiambo",
+    title: "Head of Public Relations, Mumias Sugar Company",
   },
 ];
 
@@ -178,29 +178,29 @@ export const companies = [
 export const workExperience = [
   {
     id: 1,
-    title: "Frontend Engineer Intern",
-    desc: "Assisted in the development of a web-based platform using React.js, enhancing interactivity.",
+    title: "Full Stack Intern - Goddan",
+    desc: "Gained hands-on experience in both frontend and backend development, contributing to real-world projects and honing my skills across the entire stack.",
     className: "md:col-span-2",
     thumbnail: "/exp1.svg",
   },
   {
     id: 2,
-    title: "Mobile App Dev - JSM Tech",
-    desc: "Designed and developed mobile app for both iOS & Android platforms using React Native.",
-    className: "md:col-span-2", // change to md:col-span-2
+    title: "Developer - YCenter Shamba Solutions",
+    desc: "Developed Shamba Assistant, an AI-powered app helping farmers manage everything from soil testing to harvesting, revolutionizing agricultural practices.",
+    className: "md:col-span-2",
     thumbnail: "/exp2.svg",
   },
   {
     id: 3,
-    title: "Freelance App Dev Project",
-    desc: "Led the dev of a mobile app for a client, from initial concept to deployment on app stores.",
-    className: "md:col-span-2", // change to md:col-span-2
+    title: "AI Integration Specialist (Freelance)",
+    desc: "Empowers businesses with cutting-edge AI features, enhancing their products and services to stay competitive in the rapidly evolving tech landscape.",
+    className: "md:col-span-2", 
     thumbnail: "/exp3.svg",
   },
   {
     id: 4,
-    title: "Lead Frontend Developer",
-    desc: "Developed and maintained user-facing features using modern frontend technologies.",
+    title: "Web Development Freelancer",
+    desc: "Crafted bespoke websites for diverse clients, implementing advanced features like session management to deliver seamless user experiences.",
     className: "md:col-span-2",
     thumbnail: "/exp4.svg",
   },

@@ -14,6 +14,7 @@ import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import Contact from "@/components/contact";
 import { HappyClients } from "@/components/happy-clients";
+import Chat from "@/components/chat";
 
 const AnimatedSection = ({ children }: { children: ReactNode }) => {
   const [ref, inView] = useInView({
@@ -90,6 +91,7 @@ const Page = () => {
           <Footer />
         </AnimatedSection>
       </div>
+      <Chat/>
     </main>
   );
 };
