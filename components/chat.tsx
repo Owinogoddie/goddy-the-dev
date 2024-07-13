@@ -72,7 +72,7 @@ export default function Chat() {
         if (done) break;
         const chunk = decoder.decode(value);
         assistantMessage.content += chunk;
-        setMessages((prev) => [...prev, assistantMessage]);
+        setMessages((prev) => [...prev.slice(0, -1), assistantMessage]);
       }
     } catch (error) {
       console.error("Error:", error);
