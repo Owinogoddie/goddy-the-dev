@@ -1,7 +1,11 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import * as pdfjsLib from "pdfjs-dist";
+import "pdfjs-dist/web/pdf_viewer.css";
+
+pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
 
 interface ResumeViewerProps {
   pdfUrl: string;
@@ -12,7 +16,7 @@ const ResumeViewer: React.FC<ResumeViewerProps> = ({ pdfUrl }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [downloadProgress, setDownloadProgress] = useState(0);
   const [downloadComplete, setDownloadComplete] = useState(false);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const handleIframeLoad = () => {
     setIsLoading(false);
@@ -55,6 +59,33 @@ const ResumeViewer: React.FC<ResumeViewerProps> = ({ pdfUrl }) => {
       setDownloadProgress(0);
     }
   };
+
+  useEffect(() => {
+    if (!isOpen || !canvasRef.current) return;
+
+    const loadPdf = async () => {
+      setIsLoading(true);
+
+      const loadingTask = pdfjsLib.getDocument(pdfUrl);
+      const pdf = await loadingTask.promise;
+      const page = await pdf.getPage(1);
+      const viewport = page.getViewport({ scale: 1.5 });
+      const canvas = canvasRef.current!;
+      const context = canvas.getContext("2d")!;
+      canvas.height = viewport.height;
+      canvas.width = viewport.width;
+
+      const renderTask = page.render({
+        canvasContext: context,
+        viewport: viewport,
+      });
+
+      await renderTask.promise;
+      setIsLoading(false);
+    };
+
+    loadPdf();
+  }, [isOpen, pdfUrl]);
 
   return (
     <>
@@ -103,14 +134,11 @@ const ResumeViewer: React.FC<ResumeViewerProps> = ({ pdfUrl }) => {
                   <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
                 </div>
               )}
-              <iframe
-                ref={iframeRef}
-                src={`${pdfUrl}#view=FitH`}
+              <canvas
+                ref={canvasRef}
                 className={`w-full flex-grow border-0 ${
                   isLoading ? "hidden" : ""
                 }`}
-                title="Resume PDF"
-                onLoad={handleIframeLoad}
                 style={{ height: "calc(100% - 2rem)" }}
               />
               {downloadComplete && (
