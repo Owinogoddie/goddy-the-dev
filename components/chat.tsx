@@ -5,14 +5,11 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import "github-markdown-css/github-markdown-dark.css";
 
-interface Message {
-  role: "user" | "assistant";
-  content: string;
-}
-
 export default function Chat() {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<{ role: string; content: string }[]>(
+    []
+  );
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -23,7 +20,8 @@ export default function Chat() {
 
   useEffect(() => {
     if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
     }
   }, [messages]);
 
@@ -48,7 +46,7 @@ export default function Chat() {
     e.preventDefault();
     if (!input.trim()) return;
   
-    const userMessage: Message = { role: "user", content: input };
+    const userMessage = { role: "user", content: input };
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setIsLoading(true);
@@ -65,7 +63,7 @@ export default function Chat() {
   
       const reader = response.body?.getReader();
       const decoder = new TextDecoder();
-      let assistantMessage: Message = { role: "assistant", content: "" };
+      let assistantMessage = { role: "assistant", content: "" };
   
       while (true) {
         const { value, done } = await reader!.read();
@@ -85,7 +83,7 @@ export default function Chat() {
   return (
     <>
       <motion.button
-        className={`fixed ${
+        className={`fixed   ${
           isOpen ? "bottom-4" : "bottom-12 md:bottom-4"
         } right-[2px] bg-slate-200 text-primary-foreground p-4 rounded-full shadow-lg z-[999998]`}
         whileHover={{ scale: 1.1 }}
