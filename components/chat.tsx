@@ -34,10 +34,13 @@ export default function Chat() {
   }, [isOpen]);
 
   const streamWelcomeMessage = async () => {
-    for (let i = 0; i <= welcomeMessage.length; i++) {
-      await new Promise((resolve) => setTimeout(resolve, 5));
+    const chunkSize = 5; // Increase this number to speed up the animation
+    for (let i = 0; i <= welcomeMessage.length; i += chunkSize) {
+      await new Promise((resolve) => setTimeout(resolve, 1)); // Reduced delay
       setMessages([{ role: "assistant", content: welcomeMessage.slice(0, i) }]);
     }
+    // Ensure the full message is displayed at the end
+    setMessages([{ role: "assistant", content: welcomeMessage }]);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
