@@ -16,11 +16,7 @@ const ResumeViewer: React.FC<ResumeViewerProps> = ({ pdfUrl }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [downloadProgress, setDownloadProgress] = useState(0);
   const [downloadComplete, setDownloadComplete] = useState(false);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  const handleIframeLoad = () => {
-    setIsLoading(false);
-  };
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const handleDownload = async () => {
     try {
@@ -61,26 +57,33 @@ const ResumeViewer: React.FC<ResumeViewerProps> = ({ pdfUrl }) => {
   };
 
   useEffect(() => {
-    if (!isOpen || !canvasRef.current) return;
+    if (!isOpen || !containerRef.current) return;
 
     const loadPdf = async () => {
       setIsLoading(true);
 
       const loadingTask = pdfjsLib.getDocument(pdfUrl);
       const pdf = await loadingTask.promise;
-      const page = await pdf.getPage(1);
-      const viewport = page.getViewport({ scale: 1.5 });
-      const canvas = canvasRef.current!;
-      const context = canvas.getContext("2d")!;
-      canvas.height = viewport.height;
-      canvas.width = viewport.width;
+      const container = containerRef.current!;
+      container.innerHTML = "";
 
-      const renderTask = page.render({
-        canvasContext: context,
-        viewport: viewport,
-      });
+      for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+        const page = await pdf.getPage(pageNum);
+        const viewport = page.getViewport({ scale: 1.5 });
+        const canvas = document.createElement("canvas");
+        const context = canvas.getContext("2d")!;
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+        container.appendChild(canvas);
 
-      await renderTask.promise;
+        const renderTask = page.render({
+          canvasContext: context,
+          viewport: viewport,
+        });
+
+        await renderTask.promise;
+      }
+
       setIsLoading(false);
     };
 
@@ -102,14 +105,14 @@ const ResumeViewer: React.FC<ResumeViewerProps> = ({ pdfUrl }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+            className="fixed top-0 bottom-20 left-0 right-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
           >
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
               className="bg-white p-6 rounded-lg w-full max-w-4xl h-[90vh] flex flex-col"
-              style={{ maxHeight: "90vh" }}
+              style={{ maxHeight: "90vh", overflowY: "auto" }}
             >
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-2xl font-bold">My Resume</h2>
@@ -134,13 +137,7 @@ const ResumeViewer: React.FC<ResumeViewerProps> = ({ pdfUrl }) => {
                   <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
                 </div>
               )}
-              <canvas
-                ref={canvasRef}
-                className={`w-full flex-grow border-0 ${
-                  isLoading ? "hidden" : ""
-                }`}
-                style={{ height: "calc(100% - 2rem)" }}
-              />
+              <div ref={containerRef} className={`w-full flex-grow ${isLoading ? "hidden" : ""}`} />
               {downloadComplete && (
                 <motion.div
                   initial={{ opacity: 0, y: -50 }}
@@ -160,3 +157,4 @@ const ResumeViewer: React.FC<ResumeViewerProps> = ({ pdfUrl }) => {
 };
 
 export default ResumeViewer;
+
