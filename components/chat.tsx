@@ -34,39 +34,44 @@ export default function Chat() {
   }, [isOpen]);
 
   const streamWelcomeMessage = async () => {
-    const chunkSize = 5; // Increase this number to speed up the animation
+    const chunkSize = 5;
     for (let i = 0; i <= welcomeMessage.length; i += chunkSize) {
-      await new Promise((resolve) => setTimeout(resolve, 1)); // Reduced delay
+      await new Promise((resolve) => setTimeout(resolve, 1)); 
       setMessages([{ role: "assistant", content: welcomeMessage.slice(0, i) }]);
     }
-    // Ensure the full message is displayed at the end
     setMessages([{ role: "assistant", content: welcomeMessage }]);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) return;
-
+  
     const userMessage = { role: "user", content: input };
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setIsLoading(true);
     setError("");
-
+  
     try {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: [...messages, userMessage] }),
       });
-
+  
       if (!response.ok) throw new Error("Network response was not ok");
-
-      const data = await response.json();
-      setMessages((prev) => [
-        ...prev,
-        { role: "assistant", content: data.content },
-      ]);
+  
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+      let assistantMessage = { role: "assistant", content: "" };
+  
+      while (true) {
+        const { value, done } = await reader!.read();
+        if (done) break;
+        const chunk = decoder.decode(value);
+        assistantMessage.content += chunk;
+        setMessages((prev) => [...prev.slice(0, -1), assistantMessage]);
+      }
     } catch (error) {
       console.error("Error:", error);
       setError("An error occurred. Please try again.");

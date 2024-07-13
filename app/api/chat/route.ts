@@ -343,7 +343,7 @@ export async function POST(req: NextRequest) {
   const { messages } = await req.json();
 
   try {
-    const chatCompletion = await groq.chat.completions.create({
+    const stream  = await groq.chat.completions.create({
       messages: [
         { 
           role: "system", 
@@ -356,11 +356,32 @@ export async function POST(req: NextRequest) {
       temperature: 0.7,
       max_tokens: 1000,
       top_p: 1,
+      stream: true, // Enable streaming
     });
 
-    return NextResponse.json({ content: chatCompletion.choices[0].message.content });
+    // Create a ReadableStream to send the response
+    const readableStream = new ReadableStream({
+      async start(controller) {
+        for await (const chunk of stream) {
+          const content = chunk.choices[0]?.delta?.content || '';
+          controller.enqueue(content);
+        }
+        controller.close();
+      },
+    });
+
+    return new Response(readableStream, {
+      headers: {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
+      },
+    });
   } catch (error) {
     console.error('Error:', error);
-    return NextResponse.json({ error: 'An error occurred' }, { status: 500 });
+    return new Response(JSON.stringify({ error: 'An error occurred' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 }
