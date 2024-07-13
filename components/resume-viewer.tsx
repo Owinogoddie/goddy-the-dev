@@ -78,6 +78,7 @@ const ResumeViewer: React.FC<ResumeViewerProps> = ({ pdfUrl }) => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
               className="bg-white p-6 rounded-lg w-full max-w-4xl h-[90vh] flex flex-col"
+              style={{ maxHeight: "90vh" }}
             >
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-2xl font-bold">My Resume</h2>
@@ -110,15 +111,8 @@ const ResumeViewer: React.FC<ResumeViewerProps> = ({ pdfUrl }) => {
                 }`}
                 title="Resume PDF"
                 onLoad={handleIframeLoad}
+                style={{ height: "calc(100% - 2rem)" }}
               />
-              {/* <motion.div
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -50 }}
-            className="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg z-50"
-          >
-            Download Complete!
-          </motion.div> */}
               {downloadComplete && (
                 <motion.div
                   initial={{ opacity: 0, y: -50 }}

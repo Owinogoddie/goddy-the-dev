@@ -75,7 +75,9 @@ export default function Chat() {
   return (
     <>
       <motion.button
-        className="fixed bottom-4 right-[2px] bg-slate-200 text-primary-foreground p-4 rounded-full shadow-lg z-[999998]"
+        className={`fixed   ${
+          isOpen ? "bottom-4" : "bottom-12 md:bottom-4"
+        } right-[2px] bg-slate-200 text-primary-foreground p-4 rounded-full shadow-lg z-[999998]`}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         animate={{
@@ -97,7 +99,9 @@ export default function Chat() {
           >
             <div className="bg-background rounded-lg shadow-xl flex flex-col w-full max-w-lg h-[550px] md:h-[580px] mx-4">
               <div className="bg-gray-300 text-primary-foreground p-4 rounded-t-lg">
-                <h2 className="text-xl text-center font-bold">Chat with Godfrey AI</h2>
+                <h2 className="text-xl text-center font-bold">
+                  Chat with Godfrey AI
+                </h2>
               </div>
               <div
                 ref={chatContainerRef}
